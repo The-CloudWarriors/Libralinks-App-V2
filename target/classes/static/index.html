@@ -1,3 +1,87 @@
+<!--<!doctype html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="utf-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--  <title>Libralinks - Find Libraries</title>-->
+<!--  <script src="https://cdn.tailwindcss.com"></script>-->
+<!--  <style>-->
+<!--    .hero-bg { background: linear-gradient(180deg,#eef6ff 0%, #ffffff 100%); }-->
+<!--    .input-shadow { box-shadow: 0 10px 20px rgba(99,102,241,0.12); }-->
+<!--  </style>-->
+<!--</head>-->
+<!--<body class="hero-bg min-h-screen">-->
+<!--<header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">-->
+<!--  <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">-->
+<!--    <div class="text-3xl font-extrabold">Libralinks</div>-->
+<!--    <nav class="space-x-6">-->
+<!--      <a class="opacity-90 hover:opacity-100">Summary</a>-->
+<!--      <a class="opacity-90 hover:opacity-100">Features</a>-->
+<!--      <a class="opacity-90 hover:opacity-100">Team</a>-->
+<!--      <a class="opacity-90 hover:opacity-100">FAQ</a>-->
+<!--      <a class="opacity-90 hover:opacity-100">Contact</a>-->
+<!--    </nav>-->
+<!--  </div>-->
+<!--</header>-->
+
+<!--<main class="max-w-7xl mx-auto px-6 py-20 text-center">-->
+<!--  <h1 class="text-6xl font-extrabold text-slate-900 leading-tight">Helping readers find libraries near them<br>with one simple search.</h1>-->
+<!--  <p class="mt-6 text-xl text-slate-600">Connect. Learn. Grow. 📚 Your gateway to ideas and opportunity.</p>-->
+
+<!--  <div class="mt-12 flex items-center justify-center gap-6">-->
+<!--    <input id="q" class="w-2/5 p-4 rounded-xl border border-indigo-200 placeholder-slate-400 input-shadow" placeholder="Search by State, City, or ZIP code" />-->
+<!--    <button id="go" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg">Find My Library</button>-->
+<!--  </div>-->
+
+<!--  <div id="results" class="mt-10 max-w-3xl mx-auto text-left"></div>-->
+<!--</main>-->
+
+<!--<script>-->
+<!--    function createCard(item) {-->
+<!--      const div = document.createElement('div');-->
+<!--      div.className = 'bg-white rounded-2xl p-6 mb-4 shadow';-->
+<!--      div.innerHTML = `<div class="text-lg font-bold">${item.name}</div>-->
+<!--                       <div class="mt-2 text-slate-700">${item.address}</div>-->
+<!--                       <div class="mt-1 text-slate-500">${item.city || ''} ${item.state || ''} ${item.postalCode || ''}</div>`;-->
+<!--      return div;-->
+<!--    }-->
+
+<!--    async function search() {-->
+<!--      const q = document.getElementById('q').value.trim();-->
+<!--      const btn = document.getElementById('go');-->
+<!--      const results = document.getElementById('results');-->
+<!--      results.innerHTML = '';-->
+<!--      if (!q) {-->
+<!--        results.innerHTML = '<div class="text-center text-slate-500">Please enter a ZIP or city.</div>';-->
+<!--        return;-->
+<!--      }-->
+<!--      btn.disabled = true;-->
+<!--      try {-->
+<!--        const res = await fetch('/api/libraries/search?q=' + encodeURIComponent(q));-->
+<!--        const data = await res.json();-->
+<!--        if (!res.ok) {-->
+<!--          results.innerHTML = `<div class="text-center text-red-500">${data.error || 'Invalid input'}</div>`;-->
+<!--        } else {-->
+<!--          if (!Array.isArray(data.results) || data.results.length === 0) {-->
+<!--            results.innerHTML = '<div class="text-center text-slate-500">No results found.</div>';-->
+<!--          } else {-->
+<!--            data.results.forEach(item => results.appendChild(createCard(item)));-->
+<!--          }-->
+<!--        }-->
+<!--      } catch (e) {-->
+<!--        results.innerHTML = '<div class="text-center text-red-500">Error fetching results.</div>';-->
+<!--      } finally {-->
+<!--        btn.disabled = false;-->
+<!--      }-->
+<!--    }-->
+
+<!--    document.getElementById('go').addEventListener('click', search);-->
+<!--    document.getElementById('q').addEventListener('keydown', (e) => { if (e.key === 'Enter') search(); });-->
+<!--  </script>-->
+<!--</body>-->
+<!--</html>-->
+
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,32 +95,105 @@
   </style>
 </head>
 <body class="hero-bg min-h-screen">
-  <header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
-    <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-      <div class="text-3xl font-extrabold">Libralinks</div>
-      <nav class="space-x-6">
-        <a class="opacity-90 hover:opacity-100">Summary</a>
-        <a class="opacity-90 hover:opacity-100">Features</a>
-        <a class="opacity-90 hover:opacity-100">Team</a>
-        <a class="opacity-90 hover:opacity-100">FAQ</a>
-        <a class="opacity-90 hover:opacity-100">Contact</a>
-      </nav>
+
+<!-- Header -->
+<header class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white">
+  <div class="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+    <div class="text-3xl font-extrabold">Libralinks</div>
+    <nav class="space-x-6">
+      <a class="cursor-pointer opacity-90 hover:opacity-100" data-modal="about">About Us</a>
+      <a class="cursor-pointer opacity-90 hover:opacity-100" data-modal="faq">FAQ</a>
+      <a class="cursor-pointer opacity-90 hover:opacity-100" data-modal="contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Main -->
+<main class="max-w-7xl mx-auto px-6 py-20 text-center">
+  <h1 class="text-6xl font-extrabold text-slate-900 leading-tight">
+    Helping readers find libraries near them<br>with one simple search.
+  </h1>
+  <p class="mt-6 text-xl text-slate-600">Connect. Learn. Grow. 📚 Your gateway to ideas and opportunity.</p>
+
+  <div class="mt-12 flex items-center justify-center gap-6">
+    <input id="q" class="w-2/5 p-4 rounded-xl border border-indigo-200 placeholder-slate-400 input-shadow" placeholder="Search by State, City, or ZIP code" />
+    <button id="go" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg">Find My Library</button>
+  </div>
+
+  <div id="results" class="mt-10 max-w-3xl mx-auto text-left"></div>
+</main>
+
+<!-- Modal -->
+<div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden items-center justify-center">
+  <div class="bg-white max-w-2xl w-full mx-4 rounded-xl shadow-xl p-6 relative overflow-y-auto max-h-[90vh]">
+    <button id="closeModal" class="absolute top-4 right-4 text-gray-600 hover:text-red-500 text-xl font-bold">×</button>
+    <div id="modalBody" class="text-left text-gray-800">
+      <!-- Modal content will be injected here -->
     </div>
-  </header>
+  </div>
+</div>
 
-  <main class="max-w-7xl mx-auto px-6 py-20 text-center">
-    <h1 class="text-6xl font-extrabold text-slate-900 leading-tight">Helping readers find libraries near them<br>with one simple search.</h1>
-    <p class="mt-6 text-xl text-slate-600">Connect. Learn. Grow. 📚 Your gateway to ideas and opportunity.</p>
+<!-- Script -->
+<script>
+    const modalOverlay = document.getElementById("modalOverlay");
+    const modalBody = document.getElementById("modalBody");
+    const closeModal = document.getElementById("closeModal");
 
-    <div class="mt-12 flex items-center justify-center gap-6">
-      <input id="q" class="w-2/5 p-4 rounded-xl border border-indigo-200 placeholder-slate-400 input-shadow" placeholder="Search by State, City, or ZIP code" />
-      <button id="go" class="px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-lg">Find My Library</button>
-    </div>
+    const modalContent = {
+      about: `
+        <h2 class="text-2xl font-bold mb-4 border-b pb-2 border-indigo-300">About Us</h2>
+        <p class="text-gray-700 mb-4">
+          Libralinks is a nationwide platform designed to connect individuals with nearby libraries using a unified search experience.
+        </p>
+        <h3 class="text-xl font-semibold mt-4 mb-2">Meet the Team</h3>
+        <ul class="list-disc pl-6 text-gray-700 space-y-1">
+          <li><strong>Jane Doe</strong> – Founder & Product Lead</li>
+          <li><strong>John Smith</strong> – Frontend Developer</li>
+          <li><strong>Emily Johnson</strong> – Backend Developer</li>
+          <li><strong>Michael Lee</strong> – UX Designer</li>
+        </ul>
+      `,
+      faq: `
+        <h2 class="text-2xl font-bold mb-4 border-b pb-2 border-indigo-300">Frequently Asked Questions</h2>
+        <ul class="text-gray-700 space-y-4">
+          <li><strong>What is Libralinks?</strong><br>It's a platform to help users locate public libraries using state, city, or ZIP code.</li>
+          <li><strong>Is it free to use?</strong><br>Yes, Libralinks is completely free for public use.</li>
+        </ul>
+      `,
+      contact: `
+        <h2 class="text-2xl font-bold mb-4 border-b pb-2 border-indigo-300">Contact Us</h2>
+        <p class="text-gray-700">
+          📧 Email: <a href="mailto:support@libralinks.com" class="text-indigo-600 hover:underline">support@libralinks.com</a><br>
+          📞 Phone: +1 (555) 123-4567
+        </p>
+      `
+    };
 
-    <div id="results" class="mt-10 max-w-3xl mx-auto text-left"></div>
-  </main>
+    // Open modal with content
+    document.querySelectorAll("[data-modal]").forEach(link => {
+      link.addEventListener("click", () => {
+        const type = link.dataset.modal;
+        modalBody.innerHTML = modalContent[type] || "<p>Content not found.</p>";
+        modalOverlay.classList.remove("hidden");
+        modalOverlay.classList.add("flex");
+      });
+    });
 
-  <script>
+    // Close modal
+    closeModal.addEventListener("click", () => {
+      modalOverlay.classList.add("hidden");
+      modalOverlay.classList.remove("flex");
+    });
+
+    // Click outside to close
+    modalOverlay.addEventListener("click", (e) => {
+      if (e.target === modalOverlay) {
+        modalOverlay.classList.add("hidden");
+        modalOverlay.classList.remove("flex");
+      }
+    });
+
+    // Library search logic
     function createCard(item) {
       const div = document.createElement('div');
       div.className = 'bg-white rounded-2xl p-6 mb-4 shadow';
@@ -78,5 +235,6 @@
     document.getElementById('go').addEventListener('click', search);
     document.getElementById('q').addEventListener('keydown', (e) => { if (e.key === 'Enter') search(); });
   </script>
+
 </body>
 </html>
