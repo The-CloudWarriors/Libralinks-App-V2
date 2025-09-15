@@ -6,7 +6,7 @@
   <groupId>com.example</groupId>
   <artifactId>library-finder-final</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+  <packaging>war</packaging>
   <name>library-finder-final</name>
 
   <properties>
